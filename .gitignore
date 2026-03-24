@@ -32,6 +32,15 @@ yarn-error.log*
 # vercel
 .vercel
 
+# private
+.agent/
+20092003Cgrave@/
+*.html
+*.log
+*.mjs
+*.sql
+!supabase/migrations/*.sql
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
