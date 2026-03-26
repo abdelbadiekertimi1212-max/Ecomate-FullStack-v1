@@ -42,6 +42,20 @@ export default function ClientsPage() {
     }
   }
 
+  async function deleteUser(id: string) {
+    if (!confirm('PERMANENTLY DELETE this user? This cannot be undone and they will lose ALL access.')) return
+    const supabase = createClient()
+    const { error } = await supabase.rpc('delete_user_by_admin', { target_id: id })
+    
+    if (error) {
+      console.error('Delete Error:', error)
+      toast.error(error.message)
+    } else {
+      toast.success('User permanently deleted')
+      fetchClients()
+    }
+  }
+
   const filtered = clients.filter(c => 
     c.full_name?.toLowerCase().includes(search.toLowerCase()) ||
     c.email?.toLowerCase().includes(search.toLowerCase()) ||
@@ -124,19 +138,30 @@ export default function ClientsPage() {
                       {c.is_banned ? 'Banned' : 'Active'}
                     </span>
                   </td>
-                  <td>
-                    <button 
-                      onClick={() => toggleBan(c.id, !!c.is_banned)}
-                      style={{ 
-                        padding: '6px 14px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)',
-                        background: c.is_banned ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)',
-                        color: c.is_banned ? '#10b981' : '#ef4444',
-                        fontSize: 12, fontWeight: 600, cursor: 'pointer'
-                      }}
-                    >
-                      {c.is_banned ? 'Unban' : 'Ban User'}
-                    </button>
-                  </td>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <button 
+                        onClick={() => toggleBan(c.id, !!c.is_banned)}
+                        style={{ 
+                          padding: '6px 14px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)',
+                          background: c.is_banned ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)',
+                          color: c.is_banned ? '#10b981' : '#ef4444',
+                          fontSize: 12, fontWeight: 600, cursor: 'pointer'
+                        }}
+                      >
+                        {c.is_banned ? 'Unban' : 'Ban'}
+                      </button>
+                      <button 
+                        onClick={() => deleteUser(c.id)}
+                        style={{ 
+                          padding: '6px 10px', borderRadius: 8, border: '1px solid rgba(239,68,68,0.2)',
+                          background: 'rgba(239,68,68,0.05)',
+                          color: '#ef4444',
+                          fontSize: 14, cursor: 'pointer'
+                        }}
+                      >
+                        🗑️
+                      </button>
+                    </div>
                 </tr>
               ))
             ) : (

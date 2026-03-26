@@ -91,19 +91,13 @@ export default function SettingsPage() {
   async function deleteAccount() {
     if (!confirm('Are you absolutely sure? This will delete all your data and cannot be undone.')) return
     const supabase = createClient()
-    // Using the new RPC we created in the SQL script
     const { error } = await supabase.rpc('delete_user_self')
+    
     if (error) {
-       // Fallback for demo or if RPC is missing
-       const { error: authError } = await supabase.auth.updateUser({ data: { deleted: true } })
-       if (authError) toast.error('Error: ' + authError.message)
-       else {
-         toast.success('Account marked for deletion.')
-         await supabase.auth.signOut()
-         router.push('/')
-       }
+      console.error('Delete Error:', error)
+      toast.error('Error: ' + error.message)
     } else {
-      toast.success('Account deleted.')
+      toast.success('Account permanently deleted.')
       await supabase.auth.signOut()
       router.push('/')
     }
