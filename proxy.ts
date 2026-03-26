@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
@@ -36,24 +36,31 @@ export async function middleware(request: NextRequest) {
   }
 
   // Protected admin routes — only accessible with admin role
-  if (path.startsWith('/admin-xm9k2/dashboard')) {
+  if (path.startsWith('/admin')) {
     if (!user) {
-      return NextResponse.redirect(new URL('/admin-xm9k2/login', request.url))
+      return NextResponse.redirect(new URL('/auth/login', request.url))
     }
-    // Check admin role
+    
+    // Check admin role or specific founder email
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
       .eq('id', user.id)
       .single()
 
-    if (!profile || profile.role !== 'admin') {
-      return NextResponse.redirect(new URL('/', request.url))
+    const isAdmin = profile?.role === 'admin' || user.email === 'abdelbadie.kertimi1212@gmail.com'
+
+    if (!isAdmin) {
+      return NextResponse.redirect(new URL('/dashboard', request.url))
     }
   }
 
   // Redirect auth pages if already logged in
   if (path.startsWith('/auth/') && user) {
+    // Check if user is admin for correct redirection
+    if (user.email === 'abdelbadie.kertimi1212@gmail.com') {
+      return NextResponse.redirect(new URL('/admin', request.url))
+    }
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 

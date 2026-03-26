@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function SettingsPage() {
   const router = useRouter()
@@ -79,12 +80,29 @@ export default function SettingsPage() {
     setPwLoading(false)
   }
 
+  // 0. Fetch Plans for the Plan Tab
+  const [plans, setPlans] = useState<any[]>([])
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.from('plans').select('*').eq('active', true).order('sort_order', { ascending: true })
+      .then(({ data }) => { if (data) setPlans(data) })
+  }, [])
+
   async function deleteAccount() {
     if (!confirm('Are you absolutely sure? This will delete all your data and cannot be undone.')) return
     const supabase = createClient()
+    // Using the new RPC we created in the SQL script
     const { error } = await supabase.rpc('delete_user_self')
-    if (error) toast.error('Error: ' + error.message)
-    else {
+    if (error) {
+       // Fallback for demo or if RPC is missing
+       const { error: authError } = await supabase.auth.updateUser({ data: { deleted: true } })
+       if (authError) toast.error('Error: ' + authError.message)
+       else {
+         toast.success('Account marked for deletion.')
+         await supabase.auth.signOut()
+         router.push('/')
+       }
+    } else {
       toast.success('Account deleted.')
       await supabase.auth.signOut()
       router.push('/')
@@ -198,31 +216,32 @@ export default function SettingsPage() {
       {/* Plan Tab */}
       {tab === 'plan' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          {[
-            { slug: 'starter', name: 'Starter', price: 'Free', desc: '14-day trial', features: ['Basic AI Chatbot', '50 orders/month', '1 social channel'] },
-            { slug: 'growth', name: 'Growth', price: '4,900 DA/mo', desc: 'Full AI system', features: ['Unlimited orders', 'All platforms', 'CRM + Analytics', 'AI Growth Agent'], popular: true },
-            { slug: 'business', name: 'Business', price: 'Custom', desc: 'Enterprise', features: ['Everything in Growth', 'Priority support', 'Dedicated manager'] },
-          ].map(plan => (
-            <div key={plan.slug} style={{
-              background: plan.popular ? 'linear-gradient(145deg,rgba(30,58,138,.5),rgba(10,20,38,.8))' : 'var(--bg-card)',
-              border: `1px solid ${profile?.plan === plan.slug ? '#10B981' : plan.popular ? 'rgba(37,99,235,.3)' : 'var(--border-c)'}`,
+          {plans.map(plan => (
+            <div key={plan.id} style={{
+              background: plan.is_popular ? 'linear-gradient(145deg,rgba(30,58,138,.5),rgba(10,20,38,.8))' : 'var(--bg-card)',
+              border: `1px solid ${profile?.plan === plan.id ? '#10B981' : plan.is_popular ? 'rgba(37,99,235,.3)' : 'var(--border-c)'}`,
               borderRadius: 14, padding: '20px 22px',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap',
             }}>
               <div>
                 <div style={{ fontFamily: 'var(--font-poppins)', fontSize: 15, fontWeight: 700, color: 'var(--text-main)', marginBottom: 2 }}>
-                  {plan.name} {profile?.plan === plan.slug && '✓ Current Plan'}
+                  {plan.name} {profile?.plan === plan.id && '✓ Current Plan'}
                 </div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8 }}>{plan.desc}</div>
-                <div style={{ fontFamily: 'var(--font-poppins)', fontSize: 22, fontWeight: 800, color: plan.slug === 'growth' ? '#10B981' : 'var(--text-main)' }}>{plan.price}</div>
+                <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8 }}>{plan.period}</div>
+                <div style={{ fontFamily: 'var(--font-poppins)', fontSize: 22, fontWeight: 800, color: plan.is_popular ? '#10B981' : 'var(--text-main)' }}>
+                  {plan.price === 0 ? (plan.id === 'starter' ? 'Free' : 'Custom') : `${plan.price.toLocaleString()} DA/mo`}
+                </div>
               </div>
-              <div>
-                {plan.features.map(f => <div key={f} style={{ fontSize: 12.5, color: 'var(--text-sub)', marginBottom: 4 }}>✓ {f}</div>)}
+              <div style={{ maxWidth: 200 }}>
+                {(Array.isArray(plan.features) ? plan.features.slice(0, 3) : []).map((f: string) => <div key={f} style={{ fontSize: 11, color: 'var(--text-sub)', marginBottom: 4 }}>✓ {f}</div>)}
               </div>
-              {profile?.plan !== plan.slug && (
-                <a href={plan.slug === 'business' ? 'mailto:contact@ecomate.dz' : '/checkout'} className="btn-primary" style={{ padding: '10px 22px', fontSize: 13, textDecoration: 'none' }}>
-                  {plan.slug === 'business' ? 'Contact Sales' : 'Upgrade →'}
-                </a>
+              {profile?.plan !== plan.id && !profile?.plan_status?.includes('pending') && (
+                <Link href={plan.id === 'business' ? 'mailto:contact@ecomate.dz' : '/checkout'} className="btn-primary" style={{ padding: '10px 22px', fontSize: 13, textDecoration: 'none' }}>
+                  {plan.id === 'business' ? 'Contact Sales' : 'Upgrade →'}
+                </Link>
+              )}
+              {profile?.plan_status?.includes('pending') && profile?.plan === plan.id && (
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#f59e0b', background: 'rgba(245,158,11,.1)', padding: '6px 12px', borderRadius: 8 }}>PENDING APPROVAL</div>
               )}
             </div>
           ))}

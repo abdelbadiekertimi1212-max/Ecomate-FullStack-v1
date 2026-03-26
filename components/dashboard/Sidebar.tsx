@@ -17,10 +17,10 @@ const navItems = [
 
 const planOrder = { starter: 0, growth: 1, business: 2, none: -1 }
 
-export default function DashboardSidebar({ profile }: { profile: any }) {
+export default function DashboardSidebar({ profile, userEmail }: { profile: any; userEmail?: string }) {
   const pathname = usePathname()
   const router = useRouter()
-  const userPlan = profile?.plan || 'starter'
+  const userPlan = profile?.plan || (profile?.is_admin ? 'business' : 'starter')
 
   function canAccess(requiredPlan: string) {
     return (planOrder[userPlan as keyof typeof planOrder] ?? 0) >= (planOrder[requiredPlan as keyof typeof planOrder] ?? 0)
@@ -65,9 +65,10 @@ export default function DashboardSidebar({ profile }: { profile: any }) {
           {(profile?.full_name?.[0] || profile?.business_name?.[0] || '👤').toUpperCase()}
         </div>
         <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-main)', fontFamily: 'var(--font-poppins)', marginBottom: 2 }}>
-          {profile?.full_name || profile?.business_name || 'Client'}
+          {profile?.full_name || 'Client'}
         </div>
-        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{profile?.business_name || 'My Store'}</div>
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 2 }}>{profile?.business_name || 'My Store'}</div>
+        <div style={{ fontSize: 10, color: 'var(--text-sub)', opacity: 0.6 }}>{userEmail || profile?.email}</div>
         <div style={{
           marginTop: 8, display: 'inline-flex', alignItems: 'center', gap: 5,
           background: userPlan === 'growth' ? 'rgba(16,185,129,.1)' : 'rgba(37,99,235,.1)',

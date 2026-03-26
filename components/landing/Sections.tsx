@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import Link from 'next/link'
 
 export function Integrations() {
@@ -16,9 +17,9 @@ export function Integrations() {
         </span>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr 1px 1fr', alignItems: 'start' }}>
           {cols.map((col, i) => (
-            <>
-              {i > 0 && <div key={`div-${i}`} style={{ background: 'var(--border-c)', height: '100%', minHeight: 80 }} />}
-              <div key={i} style={{ padding: '0 40px', textAlign: 'center' }}>
+            <Fragment key={i}>
+              {i > 0 && <div style={{ background: 'var(--border-c)', height: '100%', minHeight: 80 }} />}
+              <div style={{ padding: '0 40px', textAlign: 'center' }}>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(16,185,129,.08)', border: '1px solid rgba(16,185,129,.15)', borderRadius: 100, padding: '5px 14px', fontSize: 11, fontWeight: 700, color: '#10B981', marginBottom: 16 }}>✓ {col.badge}</div>
                 <div style={{ fontFamily: 'var(--font-poppins)', fontSize: 12, fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 20 }}>{col.title}</div>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
@@ -29,7 +30,7 @@ export function Integrations() {
                   ))}
                 </div>
               </div>
-            </>
+            </Fragment>
           ))}
         </div>
       </div>
@@ -53,10 +54,12 @@ export function Features({ services }: { services?: any[] }) {
   const bentos: any[] = services && services.length > 0 
     ? services.map((s, i) => ({
         id: s.id, cls: bentosClasses[i % bentosClasses.length],
-        icon: s.image_url ? <img src={s.image_url} alt="" style={{ width: 24, height: 24, objectFit: 'contain' }} /> : (s.icon || '⚡'),
+        icon: s.icon && (s.icon.startsWith('http') || s.icon.startsWith('/')) 
+          ? <img src={s.icon} alt="" style={{ width: 24, height: 24, objectFit: 'contain' }} /> 
+          : (s.icon || '⚡'),
         iconBg: bgColors[i % bgColors.length],
-        title: s.title, desc: s.description,
-        tag: undefined, tagColor: undefined
+        title: s.name, desc: s.description,
+        tag: s.tag, tagColor: s.tag_color
       }))
     : bentosFallback
 
@@ -272,8 +275,14 @@ export function Pricing({ plans }: { plans?: any[] }) {
   ]
   const activePlans = plans && plans.length > 0 
     ? plans.map(p => ({
-        slug: p.id, name: p.name, price: p.price, period: p.description || '',
-        features: p.features || [], cta: 'Get Started', href: '/auth/register', popular: p.is_popular
+        slug: p.id, 
+        name: p.name, 
+        price: p.price === 0 ? (p.id === 'starter' ? 'Free' : 'Custom') : p.price.toLocaleString(), 
+        period: p.period || '',
+        features: Array.isArray(p.features) ? p.features : [], 
+        cta: p.cta_text || (p.id === 'business' ? 'Contact Sales' : 'Get Started →'), 
+        href: p.id === 'business' ? 'mailto:contact@ecomate.dz' : '/auth/register', 
+        popular: p.is_popular
       }))
     : fallbackPlans
 
