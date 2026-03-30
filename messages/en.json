@@ -1,0 +1,130 @@
+{
+  "Nav": {
+    "features": "Features",
+    "aiSystem": "AI System",
+    "pricing": "Pricing",
+    "howItWorks": "How It Works",
+    "reviews": "Reviews",
+    "dashboard": "Dashboard",
+    "signIn": "Sign In",
+    "tryItNow": "Try It Now"
+  },
+  "Hero": {
+    "badge": "All-in-One SaaS Platform for Algerian Business",
+    "h1_1": "Grow your",
+    "h1_2": "business.",
+    "h1_3": "We handle the",
+    "h1_highlight": "rest.",
+    "sub": "EcoMate is your all-in-one e-commerce partner — AI chatbots, fulfillment, delivery tracking, payments, videos & websites. Built exclusively for Algerian businesses.",
+    "bookCall": "Book a Free Call",
+    "aiPreview": "Live AI Preview",
+    "stats": {
+      "aiResponse": "AI response rate",
+      "automation": "Always-on automation",
+      "missedOrders": "Missed orders"
+    },
+    "revenueCard": {
+      "title": "Revenue Today",
+      "increase": "↑ +23.4% vs yesterday"
+    },
+    "orderCard": {
+      "title": "New Order ✅",
+      "orderLabel": "Order",
+      "confirmedBy": "Confirmed by AI · 2 min ago"
+    },
+    "rateCard": {
+      "title": "AI Response Rate",
+      "messagesHandled": "← 3.4k messages handled"
+    }
+  },
+  "Sections": {
+    "Integrations": {
+      "badge": "Connects seamlessly with the platforms your customers already use",
+      "social": "Where your customers message you",
+      "delivery": "Shipping partners across all wilayas",
+      "tools": "Keep using the tools you love"
+    },
+    "Features": {
+      "badge": "Everything You Need",
+      "title1": "All-in-one platform.",
+      "title2": "Zero fragmentation.",
+      "sub": "EcoMate brings every capability into one seamless, affordable system — powered by real AI, built for real results.",
+      "items": {
+        "b1": {"title": "AI Chatbot Sales", "desc": "Deployed across all platforms.", "tag": "ManyChat-powered", "icon": "🤖"},
+        "b2": {"title": "EcoTrack", "desc": "Integrated delivery logistics.", "tag": "58 Wilayas", "icon": "🚚"},
+        "b3": {"title": "ePayment", "desc": "Seamless online payments.", "tag": "CIB + eDahabia", "icon": "💳"},
+        "b4": {"title": "Fulfillment", "desc": "We store it, pack it, and ship it.", "tag": "Stock & Ship", "icon": "📦"},
+        "b5": {"title": "Creative Studio", "desc": "High-Converting Content.", "tag": "Video Production", "icon": "🎬"},
+        "b6": {"title": "Web Development", "desc": "Custom digital ecosystems.", "tag": "Sites & Landing Pages", "icon": "🌐"}
+      }
+    },
+    "How": {
+      "badge": "Simple Process",
+      "title1": "From zero to selling",
+      "title2": "in 4 steps.",
+      "sub": "We handle the complexity so you can focus on growing your business.",
+      "steps": {
+        "s1": {"title": "Tell Us Your Business", "desc": "Sign up and describe your activity. A quick onboarding call takes under 30 minutes."},
+        "s2": {"title": "We Set Everything Up", "desc": "Our team configures your AI chatbot, catalog, and dashboard."},
+        "s3": {"title": "Connect Your Channels", "desc": "Link your social pages and delivery partner in one click."},
+        "s4": {"title": "Launch & Scale", "desc": "Go live. Your AI handles orders 24/7."}
+      }
+    },
+    "Dashboard": {
+      "badge": "Live Dashboard",
+      "title1": "Your entire business.",
+      "title2": "One screen.",
+      "sub": "Real-time order tracking, revenue monitoring, and customer insights."
+    },
+    "AI": {
+      "badge": "AI-Powered Core",
+      "title1": "Your store sells",
+      "title2": "while you sleep.",
+      "sub": "Our AI handles the full customer journey automatically in Arabic, French, and English.",
+      "features": [
+        {"title": "All Social Platforms", "desc": "Facebook Messenger, Instagram DM, WhatsApp, Telegram."},
+        {"title": "Interactive Shopping", "desc": "Customers browse products, pick size and color inside the chat."},
+        {"title": "Auto Order Management", "desc": "Every order logged instantly to your dashboard."},
+        {"title": "Delivery Auto-Tracking", "desc": "Customers receive live status updates automatically."}
+      ],
+      "cta": "See AI in Action"
+    },
+    "Pricing": {
+      "badge": "Transparent Pricing",
+      "title1": "Plans that",
+      "title2": "scale with you.",
+      "sub": "Select a service to view available packs.",
+      "services": {
+        "creative": {
+          "title": "Creative Studio",
+          "icon": "🎬",
+          "packs": {
+            "starter": {"name": "Starter", "desc": "4 vids/mo", "price": "14,900 DA", "cta": "Contact Us"},
+            "growth": {"name": "Growth", "desc": "8 vids/mo", "price": "24,900 DA", "cta": "Contact Us"},
+            "pro": {"name": "Pro", "desc": "12 vids/mo", "price": "34,900 DA", "cta": "Contact Us"}
+          }
+        },
+        "chatbot": {
+          "title": "AI Chatbot Sales",
+          "icon": "🤖",
+          "packs": {
+            "basic": {"name": "Basic", "desc": "Setup & Training", "price": "8,900 DA/mo", "cta": "Contact Us"},
+            "pro": {"name": "Pro", "desc": "Full Automation", "price": "15,900 DA/mo", "cta": "Contact Us"},
+            "agency": {"name": "Agency", "desc": "Dedicated Support", "price": "24,900 DA/mo", "cta": "Contact Us"}
+          }
+        }
+      }
+    },
+    "CTA": {
+      "title1": "Ready to build your",
+      "title2": "digital business?",
+      "sub": "Join Algerian merchants already automating their sales.",
+      "btn1": "Contact Sales ↗",
+      "btn2": "📞 Talk to Our Team",
+      "footer": "Built at University of Bouira Startup Incubator · 🇩🇿 Made in Algeria"
+    },
+    "Footer": {
+      "desc": "The all-in-one SaaS platform helping Algerian SMEs build automated, scalable digital businesses."
+    }
+  }
+}

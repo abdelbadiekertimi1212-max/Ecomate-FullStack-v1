@@ -17,10 +17,10 @@ export default async function AdminDashboard() {
   ]
 
   const quickActions = [
-    { name: 'Update Pricing', icon: '💎', path: '/admin/plans', desc: 'Modify pricing tiers & features' },
-    { name: 'Review Approvals', icon: '⭐', path: '/admin/reviews', desc: 'Approve client testimonials' },
-    { name: 'Partner Logos', icon: '🖼️', path: '/admin/partners', desc: 'Add or remove scrolling logos' },
-    { name: 'Client Security', icon: '🛡️', path: '/admin/clients', desc: 'Manage access and subscriptions' },
+    { name: 'Update Pricing', icon: '💎', path: '/em-admin-panel-x9k7/plans', desc: 'Modify pricing tiers & features' },
+    { name: 'Review Approvals', icon: '⭐', path: '/em-admin-panel-x9k7/reviews', desc: 'Approve client testimonials' },
+    { name: 'Partner Logos', icon: '🖼️', path: '/em-admin-panel-x9k7/partners', desc: 'Add or remove scrolling logos' },
+    { name: 'Client Security', icon: '🛡️', path: '/em-admin-panel-x9k7/clients', desc: 'Manage access and subscriptions' },
   ]
 
   return (

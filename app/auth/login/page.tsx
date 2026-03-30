@@ -36,9 +36,10 @@ function LoginContent() {
       const isAdmin = profile?.role === 'admin'
       
       if (isAdmin) {
-        toast.success('Welcome back, Admin!')
-        router.push('/admin')
-        router.refresh()
+        // Security: Do not allow admin login via public portal
+        await supabase.auth.signOut()
+        toast.error('Invalid credentials or unauthorized access.')
+        setLoading(false)
         return
       }
     }

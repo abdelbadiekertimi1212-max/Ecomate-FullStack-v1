@@ -5,13 +5,16 @@ import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
 
 const menuItems = [
-  { name: 'Overview', icon: '📊', path: '/admin' },
-  { name: 'Partners', icon: '🤝', path: '/admin/partners' },
-  { name: 'Services', icon: '🛠️', path: '/admin/services' },
-  { name: 'Plans', icon: '💎', path: '/admin/plans' },
-  { name: 'Reviews', icon: '⭐', path: '/admin/reviews' },
-  { name: 'Checkouts', icon: '💳', path: '/admin/checkouts' },
-  { name: 'Clients', icon: '👥', path: '/admin/clients' },
+  { name: 'Overview', icon: '📊', path: '/em-admin-panel-x9k7' },
+  { name: 'Fulfillment', icon: '📦', path: '/em-admin-panel-x9k7/fulfillment' },
+  { name: 'Creative', icon: '🎬', path: '/em-admin-panel-x9k7/creative' },
+  { name: 'Web Projects', icon: '🌐', path: '/em-admin-panel-x9k7/web-projects' },
+  { name: 'Partners', icon: '🤝', path: '/em-admin-panel-x9k7/partners' },
+  { name: 'Services', icon: '🛠️', path: '/em-admin-panel-x9k7/services' },
+  { name: 'Plans Config', icon: '💎', path: '/em-admin-panel-x9k7/plans' },
+  { name: 'Reviews', icon: '⭐', path: '/em-admin-panel-x9k7/reviews' },
+  { name: 'Checkouts', icon: '💳', path: '/em-admin-panel-x9k7/checkouts' },
+  { name: 'Clients', icon: '👥', path: '/em-admin-panel-x9k7/clients' },
 ]
 
 export default function AdminSidebar({ adminName }: { adminName: string }) {
@@ -40,7 +43,7 @@ export default function AdminSidebar({ adminName }: { adminName: string }) {
     }}>
       {/* Brand */}
       <div style={{ marginBottom: 48, padding: '0 12px' }}>
-        <Link href="/admin" style={{ 
+        <Link href="/em-admin-panel-x9k7" style={{ 
           fontSize: 22, 
           fontWeight: 800, 
           color: '#fff', 
