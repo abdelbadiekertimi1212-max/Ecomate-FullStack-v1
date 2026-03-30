@@ -1,7 +1,7 @@
 import {getRequestConfig} from 'next-intl/server';
 import {cookies} from 'next/headers';
-import en from './messages/en.json';
-import ar from './messages/ar.json';
+import en from '../messages/en.json';
+import ar from '../messages/ar.json';
 
 const messagesMap: Record<string, any> = { en, ar };
 
