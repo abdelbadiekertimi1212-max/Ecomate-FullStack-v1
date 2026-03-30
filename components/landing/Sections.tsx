@@ -265,7 +265,7 @@ export async function AISection() {
   )
 }
 
-export async function Pricing() {
+export async function Pricing({ plans = [] }: { plans?: any[] }) {
   const t = await getTranslations('Sections.Pricing')
   const servicesRaw = t.raw('services')
   // Depending on next-intl config, t.raw might return an object matching the JSON.
